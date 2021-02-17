@@ -30,12 +30,6 @@ public class GroupController {
         service.delete(id);
     }
 
-    @PatchMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Group editarDataInicio(@PathVariable("id") String id, @RequestBody Group group) {
-
-        return service.updateDataInicio(id, group.getCreatedAt());
-    }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -68,7 +62,17 @@ public class GroupController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Group> listar() {
-        return service.findAll();
+    public List<Group> listar(@RequestParam(name = "searchName", required = false, defaultValue = "") String name,
+                              @RequestParam(name ="exactMatch", required = false, defaultValue = "false")
+                                      String stringExactMatch) {
+
+        if(name.equals("")) {
+            return service.findAll();
+        }
+        else {
+            boolean exactMatch = stringExactMatch.equals("true") ? true : false;
+            return service.findAllByName(name, exactMatch);
+        }
+
     }
 }

@@ -16,4 +16,6 @@ public interface GroupDao {
     Group findById(UUID id);
 
     List<Group> findAll();
+
+    List<Group> findAllByName(String name, boolean exactMatch);
 }
