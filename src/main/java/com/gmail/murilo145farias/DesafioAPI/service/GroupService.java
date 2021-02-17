@@ -10,13 +10,13 @@ public interface GroupService {
 
     void save(Group curso);
 
-    void update(UUID id, Group curso);
+    void update(String stringId, Group curso);
 
-    void delete(UUID id);
+    void delete(String stringId);
 
-    Group findById(UUID id);
+    Group findById(String stringId);
 
     List<Group> findAll();
 
-    Group updateDataInicio(UUID id, Date createdAt);
+    Group updateDataInicio(String stringId, Date createdAt);
 }
