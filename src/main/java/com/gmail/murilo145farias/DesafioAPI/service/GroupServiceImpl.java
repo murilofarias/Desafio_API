@@ -2,6 +2,7 @@ package com.gmail.murilo145farias.DesafioAPI.service;
 
 import com.gmail.murilo145farias.DesafioAPI.dao.GroupDao;
 import com.gmail.murilo145farias.DesafioAPI.domain.Group;
+import com.gmail.murilo145farias.DesafioAPI.exception.IdNaoValidoServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,21 +25,22 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public void update(UUID id, Group group) {
+    public void update(String stringId, Group group) {
+        UUID id = validarId(stringId);
         group.setId(id);
-        dao.findById(id);
+        group.setCreatedAt(dao.findById(id).getCreatedAt());
         dao.update(group);
     }
 
     @Override
-    public void delete(UUID id) {
-
+    public void delete(String stringId) {
+        UUID id = validarId(stringId);
         dao.delete(id);
     }
 
     @Override
-    public Group findById(UUID id) {
-
+    public Group findById(String stringId) {
+        UUID id = validarId(stringId);
         return dao.findById(id);
     }
 
@@ -49,10 +51,21 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Group updateDataInicio(UUID id, Date dataInicio) {
-
+    public Group updateDataInicio(String stringId, Date dataInicio) {
+        UUID id = validarId(stringId);
         Group group = dao.findById(id);
         group.setCreatedAt(dataInicio);
         return group;
+    }
+
+    public UUID validarId(String stringId) {
+        UUID id;
+        try {
+            id = UUID.fromString(stringId);
+        } catch(IllegalArgumentException ex)
+        {
+            throw new IdNaoValidoServiceException("O id informado não está no formato UUID");
+        }
+        return id;
     }
 }

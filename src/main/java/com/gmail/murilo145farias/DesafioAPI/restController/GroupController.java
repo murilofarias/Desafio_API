@@ -1,6 +1,7 @@
 package com.gmail.murilo145farias.DesafioAPI.restController;
 
 import com.gmail.murilo145farias.DesafioAPI.domain.Group;
+import com.gmail.murilo145farias.DesafioAPI.exception.IdNaoValidoServiceException;
 import com.gmail.murilo145farias.DesafioAPI.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,21 +25,21 @@ public class GroupController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void excluir(@PathVariable("id") UUID id) {
+    public void excluir(@PathVariable("id") String id) {
 
         service.delete(id);
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Group editarDataInicio(@PathVariable("id") UUID id, @RequestBody Group group) {
+    public Group editarDataInicio(@PathVariable("id") String id, @RequestBody Group group) {
 
         return service.updateDataInicio(id, group.getCreatedAt());
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Group editar(@PathVariable("id") UUID id, @RequestBody Group group) {
+    public Group editar(@PathVariable("id") String id, @RequestBody Group group) {
 
         service.update(id, group);
         return group;
@@ -46,9 +47,11 @@ public class GroupController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Group getGroup(@PathVariable("id") UUID id) {
+    public Group getGroup(@PathVariable("id") String id) {
+
         return service.findById(id);
     }
+
 
     @PostMapping
     public ResponseEntity<Void> salvar(@RequestBody Group group) {
