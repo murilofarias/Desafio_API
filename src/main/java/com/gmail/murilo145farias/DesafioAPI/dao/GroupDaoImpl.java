@@ -53,4 +53,17 @@ public class GroupDaoImpl implements GroupDao {
                 .createQuery("select c from Group c", Group.class)
                 .getResultList();
     }
+
+    public List<Group> findAllByName(String name, boolean exactMatch) {
+        if(exactMatch) {
+            return entityManager
+                    .createQuery("select c from Group c where name='" + name + "'", Group.class)
+                    .getResultList();
+        }
+        else {
+            return entityManager
+                    .createQuery("select c from Group c where name like '%" + name + "%'", Group.class)
+                    .getResultList();
+        }
+    }
 }

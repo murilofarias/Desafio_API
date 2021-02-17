@@ -50,6 +50,13 @@ public class GroupServiceImpl implements GroupService {
         return dao.findAll();
     }
 
+    public List<Group> findAllByName(String name, boolean exactMatch) {
+
+        return dao.findAllByName(name, exactMatch);
+    }
+
+
+
     @Override
     public Group updateDataInicio(String stringId, Date dataInicio) {
         UUID id = validarId(stringId);

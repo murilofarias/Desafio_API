@@ -18,5 +18,7 @@ public interface GroupService {
 
     List<Group> findAll();
 
+    List<Group> findAllByName(String name, boolean exactMatch);
+
     Group updateDataInicio(String stringId, Date createdAt);
 }
