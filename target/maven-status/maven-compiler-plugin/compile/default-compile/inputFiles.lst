@@ -1,6 +1,7 @@
 /home/murilo/bin/Projects/desafio_API/src/main/java/com/gmail/murilo145farias/DesafioAPI/exception/IdNaoValidoServiceException.java
 /home/murilo/bin/Projects/desafio_API/src/main/java/com/gmail/murilo145farias/DesafioAPI/exception/NaoExisteDaoException.java
 /home/murilo/bin/Projects/desafio_API/src/main/java/com/gmail/murilo145farias/DesafioAPI/exception/RestExceptionHandler.java
+/home/murilo/bin/Projects/desafio_API/src/main/java/com/gmail/murilo145farias/DesafioAPI/domain/User.java
 /home/murilo/bin/Projects/desafio_API/src/main/java/com/gmail/murilo145farias/DesafioAPI/dao/GroupDao.java
 /home/murilo/bin/Projects/desafio_API/src/main/java/com/gmail/murilo145farias/DesafioAPI/dao/GroupDaoImpl.java
 /home/murilo/bin/Projects/desafio_API/src/main/java/com/gmail/murilo145farias/DesafioAPI/domain/DetalheErro.java

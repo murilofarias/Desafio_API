@@ -16,9 +16,8 @@ public interface GroupService {
 
     Group findById(String stringId);
 
-    List<Group> findAll();
+    List<Group> findAll(String name, boolean exactMatch);
 
-    List<Group> findAllByName(String name, boolean exactMatch);
+    List<Group> findAllWithoutUsers(String name, boolean exactMatch);
 
-    Group updateDataInicio(String stringId, Date createdAt);
 }

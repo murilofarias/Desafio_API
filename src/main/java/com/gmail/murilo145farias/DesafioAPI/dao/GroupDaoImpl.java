@@ -48,22 +48,30 @@ public class GroupDaoImpl implements GroupDao {
     }
 
     @Override
-    public List<Group> findAll() {
+    public List<Group> findAll(String name, boolean exactMatch) {
+        String query = "select c from TheGroup c";
+        query = insertSearchByName(query, name, exactMatch);
         return entityManager
-                .createQuery("select c from Group c", Group.class)
+                .createQuery(query, Group.class)
+                .getResultList();
+
+    }
+
+    @Override
+    public List<Group> findAllWithoutUsers(String name, boolean exactMatch) {
+        String query = "select new TheGroup(c.id, c.name, c.createdAt) from TheGroup c";
+        query = insertSearchByName(query, name, exactMatch);
+        return entityManager
+                .createQuery(query, Group.class)
                 .getResultList();
     }
 
-    public List<Group> findAllByName(String name, boolean exactMatch) {
-        if(exactMatch) {
-            return entityManager
-                    .createQuery("select c from Group c where name='" + name + "'", Group.class)
-                    .getResultList();
+    private String insertSearchByName(String query, String name, boolean exactMatch)
+    {
+        if(!name.equals("")) {
+            query += exactMatch ? " where name='" + name + "'" : " where name like '%" + name + "%'";
         }
-        else {
-            return entityManager
-                    .createQuery("select c from Group c where name like '%" + name + "%'", Group.class)
-                    .getResultList();
-        }
+        return query;
     }
+
 }
