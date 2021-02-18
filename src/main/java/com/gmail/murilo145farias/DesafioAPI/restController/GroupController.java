@@ -64,14 +64,17 @@ public class GroupController {
     @ResponseStatus(HttpStatus.OK)
     public List<Group> listar(@RequestParam(name = "searchName", required = false, defaultValue = "") String name,
                               @RequestParam(name ="exactMatch", required = false, defaultValue = "false")
-                                      String stringExactMatch) {
-
-        if(name.equals("")) {
-            return service.findAll();
+                                      String stringExactMatch,
+                              @RequestParam(name="showUsers", required =false, defaultValue = "false")
+                                          String stringShowUsers)
+    {
+        boolean showUsers = stringShowUsers.equals("true") ? true : false;
+        boolean exactMatch = stringExactMatch.equals("true") ? true : false;
+        if(showUsers) {
+            return service.findAll(name, exactMatch);
         }
         else {
-            boolean exactMatch = stringExactMatch.equals("true") ? true : false;
-            return service.findAllByName(name, exactMatch);
+            return service.findAllWithoutUsers(name, exactMatch);
         }
 
     }

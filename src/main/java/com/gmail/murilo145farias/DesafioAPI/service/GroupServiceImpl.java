@@ -22,6 +22,12 @@ public class GroupServiceImpl implements GroupService {
     public void save(Group group) {
         group.setCreatedAt(new Date());
         dao.save(group);
+
+        if(group.getUsers() != null) {
+            group.getUsers()
+                    .parallelStream()
+                    .forEach(group::addUser);
+        }
     }
 
     @Override
@@ -45,25 +51,18 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> findAll() {
+    public List<Group> findAll(String name, boolean exactMatch) {
 
-        return dao.findAll();
+        return dao.findAll(name, exactMatch);
     }
-
-    public List<Group> findAllByName(String name, boolean exactMatch) {
-
-        return dao.findAllByName(name, exactMatch);
-    }
-
-
 
     @Override
-    public Group updateDataInicio(String stringId, Date dataInicio) {
-        UUID id = validarId(stringId);
-        Group group = dao.findById(id);
-        group.setCreatedAt(dataInicio);
-        return group;
+    public List<Group> findAllWithoutUsers(String name, boolean exactMatch) {
+
+        return dao.findAllWithoutUsers(name, exactMatch);
     }
+
+
 
     public UUID validarId(String stringId) {
         UUID id;

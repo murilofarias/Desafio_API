@@ -1,15 +1,5 @@
 version: '3'
 services:
-  spring_boot_com_mysql:
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    image: spring_boot_com_mysql/api
-    ports:
-      - '8080:8080'
-      - '5005:5005'
-    links:
-      - db
   db:
     image: mysql:5.6
     ports:
@@ -22,3 +12,13 @@ services:
     volumes:
       - ./docker/volume_mysql:/var/lib/mysql
 
+  spring_boot_com_mysql:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: spring_boot_com_mysql/api
+    ports:
+      - '8080:8080'
+      - '5005:5005'
+    links:
+      - db

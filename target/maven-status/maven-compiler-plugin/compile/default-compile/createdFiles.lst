@@ -2,6 +2,7 @@ com/gmail/murilo145farias/DesafioAPI/restController/GroupController.class
 com/gmail/murilo145farias/DesafioAPI/service/GroupService.class
 com/gmail/murilo145farias/DesafioAPI/service/GroupServiceImpl.class
 com/gmail/murilo145farias/DesafioAPI/exception/RestExceptionHandler.class
+com/gmail/murilo145farias/DesafioAPI/domain/User.class
 com/gmail/murilo145farias/DesafioAPI/dao/GroupDaoImpl.class
 com/gmail/murilo145farias/DesafioAPI/domain/Group.class
 com/gmail/murilo145farias/DesafioAPI/exception/NaoExisteDaoException.class

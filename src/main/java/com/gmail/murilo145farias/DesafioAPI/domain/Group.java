@@ -1,16 +1,19 @@
 package com.gmail.murilo145farias.DesafioAPI.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
-@Entity
+@Entity(name="TheGroup")
 @Table(name = "groups",
         indexes = { @Index(
-                columnList = "Name",
+                columnList = "name",
                 name = "Name_index")
         }
 )
@@ -22,11 +25,26 @@ public class Group implements Serializable {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(name="name", nullable = false)
+    @Column(name="name", nullable = false, length = 60)
     private String name;
 
-    @Column(name="createdAt")
+    @Column(nullable = false)
     private Date createdAt;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private List<User> users;
+
+    public Group() {
+        super();
+    }
+
+    public Group(UUID id, String name, Date createdAt)
+    {
+        this.id = id;
+        this.name = name;
+        this.createdAt = createdAt;
+    }
 
     public UUID getId() {
         return id;
@@ -54,6 +72,24 @@ public class Group implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public void addUser(User user) {
+        if(this.users == null) {
+            this.users = new ArrayList<User>();
+        }
+        user.setCreatedAt(new Date());
+        user.setGroup(this);
+        this.users.add(user);
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,5 +113,6 @@ public class Group implements Serializable {
                 "CreatedAt=" + createdAt +
                 "}";
     }
+
 }
 
