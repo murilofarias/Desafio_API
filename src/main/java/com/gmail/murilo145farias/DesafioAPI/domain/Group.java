@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@Entity(name="TheGroup")
+@Entity(name="TheGroup") //Entity has this name because Group is a reserved keyword in SQL
 @Table(name = "groups",
         indexes = { @Index(
                 columnList = "name",
