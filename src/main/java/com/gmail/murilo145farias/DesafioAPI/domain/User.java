@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.UUID;
 
 
-@Entity
+@Entity(name="TheUser")//Entity has this name because User is a reserved keyword in SQL
 @Table(name = "users")
 public class User implements Serializable {
 

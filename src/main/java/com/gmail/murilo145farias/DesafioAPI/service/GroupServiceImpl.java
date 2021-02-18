@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static com.gmail.murilo145farias.util.UtilAPI.validarId;
+
 @Service
 @Transactional
 public class GroupServiceImpl implements GroupService {
@@ -52,7 +54,6 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public List<Group> findAll(String name, boolean exactMatch) {
-
         return dao.findAll(name, exactMatch);
     }
 
@@ -64,14 +65,4 @@ public class GroupServiceImpl implements GroupService {
 
 
 
-    public UUID validarId(String stringId) {
-        UUID id;
-        try {
-            id = UUID.fromString(stringId);
-        } catch(IllegalArgumentException ex)
-        {
-            throw new IdNaoValidoServiceException("O id informado não está no formato UUID");
-        }
-        return id;
-    }
 }
