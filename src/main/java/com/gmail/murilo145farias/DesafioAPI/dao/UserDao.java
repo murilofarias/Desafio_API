@@ -15,6 +15,6 @@ public interface UserDao {
 
     User findByIdUserAndIdGroup(UUID idUser, UUID idGroup);
 
-    List<User> findAllByGroup(UUID idGroup, String fields);
+    List<User> findAllByGroup(UUID idGroup, boolean showGroupField, String name, boolean exactMatch);
 
 }

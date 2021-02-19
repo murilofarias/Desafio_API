@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllByGroup(String idGroup, String fields) {
-        return dao.findAllByGroup(validarId(idGroup), fields);
+    public List<User> findAllByGroup(String idGroup, boolean showGroupField, String name, boolean exactMatch) {
+        return dao.findAllByGroup(validarId(idGroup), showGroupField, name, exactMatch);
     }
 }

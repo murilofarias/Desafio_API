@@ -1,5 +1,6 @@
 package com.gmail.murilo145farias.DesafioAPI.dao;
 
+import com.gmail.murilo145farias.DesafioAPI.domain.Group;
 import com.gmail.murilo145farias.DesafioAPI.domain.User;
 import com.gmail.murilo145farias.DesafioAPI.exception.NaoExisteDaoException;
 import org.springframework.stereotype.Repository;
@@ -50,15 +51,32 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<User> findAllByGroup(UUID idGroup, String fields) {
-        String select = fields.equals("group")
+    public List<User> findAllByGroup(UUID idGroup, boolean showGroupField, String name, boolean exactMatch) {
+        String query = showGroupField
                 ? "select v"
                 : "select new TheUser(v.id, v.name, v.phone, v.createdAt)";
 
-        return entityManager
-                .createQuery(select + " from TheUser v where v.group.id = ?1", User.class)
-                .setParameter(1, idGroup)
-                .getResultList();
+        query += " from TheUser v where v.group.id = ?1";
+        return SearchUsers(query, idGroup, name, exactMatch);
 
     }
+
+    private List<User> SearchUsers(String query, UUID idGroup,  String name, boolean exactMatch)
+    {
+        if(!name.equals("")) {
+            query += exactMatch ? " and v.name= ?2" : " and v.name like ?2";
+            name = exactMatch ? name : "%"+ name +"%";
+            return entityManager
+                    .createQuery(query, User.class)
+                    .setParameter(1, idGroup)
+                    .setParameter(2, name)
+                    .getResultList();
+        }
+
+        return entityManager
+                .createQuery(query, User.class)
+                .setParameter(1, idGroup)
+                .getResultList();
+    }
+
 }

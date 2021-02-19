@@ -1,6 +1,7 @@
 package com.gmail.murilo145farias.DesafioAPI.restController;
 
 import com.gmail.murilo145farias.DesafioAPI.domain.Group;
+import com.gmail.murilo145farias.DesafioAPI.domain.User;
 import com.gmail.murilo145farias.DesafioAPI.exception.IdNaoValidoServiceException;
 import com.gmail.murilo145farias.DesafioAPI.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class GroupController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void excluir(@PathVariable("id") String id) {
+    public void deleteGroup(@PathVariable("id") String id) {
 
         service.delete(id);
     }
@@ -33,22 +34,21 @@ public class GroupController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Group editar(@PathVariable("id") String id, @RequestBody Group group) {
-
+    public Group putGroup(@PathVariable("id") String id, @RequestBody Group group) {
         service.update(id, group);
         return group;
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Group getGroup(@PathVariable("id") String id) {
+    public Group getGroupById(@PathVariable("id") String id) {
 
         return service.findById(id);
     }
 
 
     @PostMapping
-    public ResponseEntity<Void> salvar(@RequestBody Group group) {
+    public ResponseEntity<Void> postUser(@RequestBody Group group) {
         service.save(group);
 
         URI location = ServletUriComponentsBuilder
@@ -62,7 +62,7 @@ public class GroupController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Group> listar(@RequestParam(name = "searchName", required = false, defaultValue = "") String name,
+    public List<Group> getAllGroups(@RequestParam(name = "searchName", required = false, defaultValue = "") String name,
                               @RequestParam(name ="exactMatch", required = false, defaultValue = "false")
                                       String stringExactMatch,
                               @RequestParam(name="showUsers", required =false, defaultValue = "false")
