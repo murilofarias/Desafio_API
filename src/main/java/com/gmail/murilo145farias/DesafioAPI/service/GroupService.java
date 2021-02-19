@@ -1,6 +1,7 @@
 package com.gmail.murilo145farias.DesafioAPI.service;
 
 import com.gmail.murilo145farias.DesafioAPI.domain.Group;
+import com.gmail.murilo145farias.DesafioAPI.domain.User;
 
 import java.util.Date;
 import java.util.List;

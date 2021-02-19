@@ -27,14 +27,14 @@ public class UserController {
 
     @DeleteMapping("/{idUser}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void excluir(@PathVariable("idGroup") String idGroup, @PathVariable("idUser") String idUser) {
+    public void deleteUser(@PathVariable("idGroup") String idGroup, @PathVariable("idUser") String idUser) {
 
         service.delete(idUser, idGroup);
     }
 
     @PutMapping("/{idUser}")
     @ResponseStatus(HttpStatus.OK)
-    public User editar(@PathVariable("idGroup") String idGroup,
+    public User putUser(@PathVariable("idGroup") String idGroup,
                        @PathVariable("idUser") String idUser, @RequestBody User user) {
 
         service.update(idUser, idGroup, user);
@@ -43,7 +43,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> salvar(@PathVariable("idGroup") String idGroup, @RequestBody User user) {
+    public ResponseEntity<Void> postUser(@PathVariable("idGroup") String idGroup, @RequestBody User user) {
 
         service.save(idGroup, user);
 
@@ -58,15 +58,22 @@ public class UserController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<User> listar(@PathVariable("idGroup") String idGroup,
-                             @RequestParam(name = "fields", required = false, defaultValue = "") String fields) {
+    public List<User> getAllUsers(@PathVariable("idGroup") String idGroup,
+                             @RequestParam(name = "showGroupField", required = false, defaultValue = "false")
+                                     String stringShowGroupField,
+                             @RequestParam(name = "searchName", required = false, defaultValue = "") String name,
+                             @RequestParam(name ="exactMatch", required = false, defaultValue = "false")
+                                              String stringExactMatch) {
 
-        return service.findAllByGroup(idGroup, fields);
+        boolean showGroupField = stringShowGroupField.equals("true") ? true : false;
+        boolean exactMatch = stringExactMatch.equals("true") ? true : false;
+
+        return service.findAllByGroup(idGroup, showGroupField, name, exactMatch);
     }
 
     @GetMapping("/{idUser}")
     @ResponseStatus(HttpStatus.OK)
-    public User getUser(@PathVariable("idGroup") String idGroup,
+    public User getUserById(@PathVariable("idGroup") String idGroup,
                                   @PathVariable("idUser") String idUser) {
 
         return service.findByIdUserAndIdGroup(idUser, idGroup);

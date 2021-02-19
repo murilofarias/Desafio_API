@@ -2,7 +2,6 @@ package com.gmail.murilo145farias.DesafioAPI.service;
 
 import com.gmail.murilo145farias.DesafioAPI.dao.GroupDao;
 import com.gmail.murilo145farias.DesafioAPI.domain.Group;
-import com.gmail.murilo145farias.DesafioAPI.exception.IdNaoValidoServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +36,9 @@ public class GroupServiceImpl implements GroupService {
         UUID id = validarId(stringId);
         group.setId(id);
         group.setCreatedAt(dao.findById(id).getCreatedAt());
+        group.setUsers((dao.findById(id).getUsers()));
         dao.update(group);
+
     }
 
     @Override

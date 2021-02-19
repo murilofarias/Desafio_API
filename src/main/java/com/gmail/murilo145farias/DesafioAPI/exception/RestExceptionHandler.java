@@ -42,6 +42,21 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
+    @ExceptionHandler({org.hibernate.PersistentObjectException.class})
+    public ResponseEntity<Object> idGivenByPostRequest(org.hibernate.PersistentObjectException ex,
+                                                    WebRequest request) {
+
+        return handleExceptionInternal(
+                ex, DetalheErro.builder()
+                        .addDetalhe("O campo id não pode ser atribuido por requisição")
+                        .addErro(ex.getMessage())
+                        .addStatus(HttpStatus.BAD_REQUEST)
+                        .addHttpMethod(getHttpMethod(request))
+                        .addPath(getPath(request))
+                        .build(),
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
     @ExceptionHandler({org.hibernate.PropertyValueException.class})
     public ResponseEntity<Object> propriedadeNula(org.hibernate.PropertyValueException ex, WebRequest request) {
 

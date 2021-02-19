@@ -14,5 +14,5 @@ public interface UserService {
 
     User findByIdUserAndIdGroup(String idUser, String idGroup);
 
-    List<User> findAllByGroup(String idGroup, String fields);
+    List<User> findAllByGroup(String idGroup, boolean showGroupField, String name, boolean exactMatch);
 }
