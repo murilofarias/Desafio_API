@@ -1,7 +1,10 @@
 package com.gmail.murilo145farias.DesafioAPI.restController;
 
+import com.gmail.murilo145farias.DesafioAPI.domain.Group;
 import com.gmail.murilo145farias.DesafioAPI.domain.User;
 import com.gmail.murilo145farias.DesafioAPI.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,34 +19,50 @@ import java.util.List;
 
 @RestController
 @RequestMapping(
-        value = "/groups/{idGroup}/users",
-        produces = MediaType.APPLICATION_JSON_VALUE,
-        consumes = MediaType.APPLICATION_JSON_VALUE
-)
+        value = "/groups/{idGroup}/users")
 public class UserController {
 
     @Autowired
     private UserService service;
 
+    @ApiOperation(value= "Deleta uma instância de User pelo seu id")
     @DeleteMapping("/{idUser}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable("idGroup") String idGroup, @PathVariable("idUser") String idUser) {
+    public void deleteUser(@ApiParam(value="Id do Group que contém o User a ser deletado", required = true)
+                               @PathVariable("idGroup") String idGroup,
+                           @ApiParam(value="Id do User a ser deletado")
+                            @PathVariable("idUser") String idUser) {
 
         service.delete(idUser, idGroup);
     }
 
-    @PutMapping("/{idUser}")
+    @ApiOperation(value= "Atualiza a instância de User do id informado",
+            notes="Os únicos campos de User a serem atualizados são name e phone. Todos os outros são ignorados." +
+                  "O corpo da Resposta é a instância de User resultante da operação",
+            response= User.class)
+    @PutMapping(path = "/{idUser}",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public User putUser(@PathVariable("idGroup") String idGroup,
-                       @PathVariable("idUser") String idUser, @RequestBody User user) {
+    public User putUser(@ApiParam(value="Id do Group que contém o User a ser atualizado", required = true)
+                            @PathVariable("idGroup") String idGroup,
+                       @ApiParam(value="Id do Group que contém o User a ser atualizado", required = true)
+                            @PathVariable("idUser") String idUser,
+                       @RequestBody User user) {
 
         service.update(idUser, idGroup, user);
         return user;
     }
 
-    @PostMapping
+    @ApiOperation(value= "Cria uma nova instância de User.",
+            notes="O campo name é obrigatório e phone opcional. Um valor submetido no campo id lançará uma exceção" +
+                  " correspondente. O createdAt é preenchido automaticamente",
+            response= User.class)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> postUser(@PathVariable("idGroup") String idGroup, @RequestBody User user) {
+    public ResponseEntity<Void> postUser(@ApiParam(value="Id do Group que conterá o User a ser criado", required = true)
+                                             @PathVariable("idGroup") String idGroup,
+                                         @RequestBody User user) {
 
         service.save(idGroup, user);
 
@@ -56,13 +75,25 @@ public class UserController {
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping
+
+    @ApiOperation(value= "Retorna lista de Users dentro de um grupo.",
+            notes="Sem os parâmetros da query string, essa operação retorna todas as instâncias de Users no Group. " +
+                  "Caso um filtro de name seja dado, ele retorna todas as instâncias que satisfazem a condição do " +
+                  "filtro em um Group.",
+            response= User.class, responseContainer = "List")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public List<User> getAllUsers(@PathVariable("idGroup") String idGroup,
-                             @RequestParam(name = "showGroupField", required = false, defaultValue = "false")
+    public List<User> getAllUsers(@ApiParam(value="Id do Grupo de onde será procurado os Users", required = true)
+                                      @PathVariable("idGroup") String idGroup,
+                             @ApiParam(value="Determina se o campo Group é exibido (true) ou não (qualquer outro valor" +
+                                     " será false)")
+                                @RequestParam(name = "showGroupField", required = false, defaultValue = "false")
                                      String stringShowGroupField,
-                             @RequestParam(name = "searchName", required = false, defaultValue = "") String name,
-                             @RequestParam(name ="exactMatch", required = false, defaultValue = "false")
+                             @ApiParam(value="Termo filtro para o campo name")
+                                @RequestParam(name = "searchName", required = false, defaultValue = "") String name,
+                             @ApiParam(value="Determina se os Groups devem ser exibidos com os seus Users (true) ou não"
+                                      + " (qualquer outro valor será false)")
+                                @RequestParam(name ="exactMatch", required = false, defaultValue = "false")
                                               String stringExactMatch) {
 
         boolean showGroupField = stringShowGroupField.equals("true") ? true : false;
@@ -71,10 +102,13 @@ public class UserController {
         return service.findAllByGroup(idGroup, showGroupField, name, exactMatch);
     }
 
-    @GetMapping("/{idUser}")
+    @ApiOperation(value= "Retorna a instância de User pelo id dentro do Group informado pelo id", response= User.class)
+    @GetMapping(path= "/{idUser}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public User getUserById(@PathVariable("idGroup") String idGroup,
-                                  @PathVariable("idUser") String idUser) {
+    public User getUserById(@ApiParam(value="Id do Group que contém o User", required = true)
+                                 @PathVariable("idGroup") String idGroup,
+                            @ApiParam(value="Id do User a ser retornado", required = true)
+                                @PathVariable("idUser") String idUser) {
 
         return service.findByIdUserAndIdGroup(idUser, idGroup);
     }
