@@ -159,8 +159,8 @@ utiliza as funções expostas pela Data access Object)
   
 
 
-##### - O objeto DetalheErro
-Este objeto é definido em domain e serve para o tratador de Exceções construir e retornar uma resposta em 
+##### - A classe DetalheErro
+Esta classe é definida em domain e serve para o tratador de Exceções construir e retornar uma resposta em 
 formato application/json mais informativa e padronizada.
 
 
