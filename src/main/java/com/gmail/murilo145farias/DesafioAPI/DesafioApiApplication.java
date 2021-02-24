@@ -35,8 +35,8 @@ public class DesafioApiApplication {
 
 	private ApiInfo apiDetails() {
 		return new ApiInfo(
-				"Desafio API GROUP/USER",
-				"API referente a desafio proposto",
+				"Desafio API",
+				"API referente a um desafio proposto",
 				"1.0",
 				"Free to use",
 				new springfox.documentation.service.Contact("Murilo Farias",

@@ -1,12 +1,11 @@
 package com.gmail.murilo145farias.DesafioAPI.restController;
 
+import com.gmail.murilo145farias.DesafioAPI.domain.DetalheErro;
 import com.gmail.murilo145farias.DesafioAPI.domain.Group;
 import com.gmail.murilo145farias.DesafioAPI.domain.User;
 import com.gmail.murilo145farias.DesafioAPI.exception.IdNaoValidoServiceException;
 import com.gmail.murilo145farias.DesafioAPI.service.GroupService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ResponseHeader;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +25,15 @@ public class GroupController {
     private GroupService service;
 
     @ApiOperation(value= "Deleta uma instância de Group pelo seu id")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    code = 204,
+                    message = "Recurso Deletado com sucesso"),
+
+            @ApiResponse(
+                    code = 404,
+                    message = "Recurso não encontrado",
+                    response= DetalheErro.class)})
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteGroup(@ApiParam(value="Id do Group a ser deletado", required = true)
@@ -36,8 +44,18 @@ public class GroupController {
 
     @ApiOperation(value= "Atualiza a instância do id informado",
             notes="O único campo de Group a ser atualizado é name. Todos os outros são ignorados." +
-                  "O corpo da Resposta é a instância de Group resultante da operação",
-            response= Group.class)
+                  "O corpo da Resposta é a instância de Group resultante da operação"
+            /*response= Group.class*/)
+    @ApiResponses(value = {
+            @ApiResponse(
+                    code = 200,
+                    message = "Recurso Atualizado com sucesso! O corpo da resposta é o recurso atualizado",
+                    response = Group.class),
+
+            @ApiResponse(
+                    code = 404,
+                    message = "Recurso não encontrado",
+                    response = DetalheErro.class)})
     @PutMapping(path="/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -73,7 +91,7 @@ public class GroupController {
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Group getGroupById(@ApiParam(value="Id do Group que deve ser retornado", required = true)
-                              @PathVariable("id") String id) {
+                                @PathVariable("id") String id) {
 
         return service.findById(id);
     }
@@ -88,11 +106,11 @@ public class GroupController {
                                         @RequestParam(name = "searchName", required = false, defaultValue = "")
                                                 String name,
                               @ApiParam(value="Determina se o valor de searchName será correspondido exatamente (true)"
-                                      + " ou parcialmente (qualquer outro valor será false")
+                                      + " ou parcialmente (qualquer outro valor será false)")
                                 @RequestParam(name ="exactMatch", required = false, defaultValue = "false")
                                       String stringExactMatch,
                               @ApiParam(value="Determina se os Groups devem ser exibidos com os seus Users (true) ou não"
-                                            + " (qualquer outro valor será false")
+                                            + " (qualquer outro valor será false)")
                                 @RequestParam(name="showUsers", required =false, defaultValue = "false")
                                           String stringShowUsers)
     {
