@@ -2,7 +2,7 @@
 Este desafio foi elaborado com o intuito de comprovar as habilidades do autor em determinadas tecnologias para o exercício
 de função no desenvolvimento de aplicações back-end java.
 
-##Descricao do projeto
+## Descricao do projeto
 * O projeto é uma API rest com um recurso, Group, e um subrecurso, User.
 * A API foi feita na linguagem Java com o springboot utilizando os starters data-JPA e Web.
 * A aplicação executa em um container Docker junto com outro container contendo o banco de dados da aplicação. 
@@ -23,7 +23,7 @@ Tabela de Conteúdos
 <!--te-->
 
 ---
-###Tecnologias
+### Tecnologias
 As seguintes Tecnologias foram Utilizadas nesse Projeto:
 * [JDK 8](https://www.oracle.com/br/java/technologies/javase/javase-jdk8-downloads.html)
 * [SpringBoot 2.4.2](https://start.spring.io/) (Starters abaixo)
@@ -36,21 +36,21 @@ As seguintes Tecnologias foram Utilizadas nesse Projeto:
 * [Maven 3.6.1](https://maven.apache.org/)
 
 ---
-###Como Usar
+### Como Usar
 
-####Pre-requisitos
+#### Pre-requisitos
 Antes de começar, precisa-se ter instalado na própria máquina as
 seguintes aplicações:
 * [Docker ( > = 19.03.x)](https://docs.docker.com/get-docker/)
 * [Docker-Compose ( > = 1.21.x)](https://docs.docker.com/compose/install/)
 
-####Executando
+#### Executando
 Não é necessário fazer o build da aplicação java para utilizar a API, pois,
 neste repositório do github, a pasta target está com o arquivo jar da aplicação incluida.
 
 ```bash
 #Clone este repositório
-$ git clone <https://github.com/murilofarias/Desafio_API>
+$ git clone https://github.com/murilofarias/Desafio_API
 
 # Acesse a pasta do projeto no terminal/cmd
 $ cd Desafio_API
@@ -59,17 +59,17 @@ $ cd Desafio_API
 #executar o script docker-compose.yaml.
 #Pode ser necessário de mais permissões no SO para realizar esse comando. 
 #Utilize sudo no início do comando caso precise
-$ docker-compose up --build --force-recreate
+$ sudo docker-compose up --build --force-recreate
 #A API iniciará com a url base <http://localhost:8080/api/> 
 ```
 
 ---
-###Documentacao Interativa
+### Documentacao Interativa
 Com a API executando, acesse a url <http://localhost:8080/api/swagger-ui.html> através de um
 navegador para poder ler a documentação e interagir com a API.
 
 ---
-###Acesso aos Recursos
+### Acesso aos Recursos
 Há um recurso Group e um subrecurso de Group que é User. Um User pertence a um Group e
 um Group pode conter vários Users. Todos os métodos retornam ou/e recebem apenas conteúdos 
 do tipo application/json no corpo da requisição/resposta. Abaixo há uma breve descrição do acesso a cada recurso.
@@ -97,12 +97,12 @@ do tipo application/json no corpo da requisição/resposta. Abaixo há uma breve
 pelo Swagger.**
 
 ---
-###Arquitetura da API
+### Arquitetura da API
 A arquitetura é baseada em 4 camadas e um tratador de exceções. A camada adjacente mais  profunda serve de interface
 para a camada superficial.( Ex: Rest Controller utiliza as funções providenciadas pela camada Service. Service 
 utiliza as funções expostas pela Data access Object)
 
-####Camadas
+#### Camadas
 
 1. **Rest Controller** :
   Responsável por encaminhar as requisições http aos devidos métodos da aplicação Java.
@@ -122,7 +122,7 @@ utiliza as funções expostas pela Data access Object)
   Camada responsável por definir os tipos dos atributos das entidades, as restrições, os relacionamentos com outras 
   entidades e a forma como os objetos Java vão ser armazenados e recuperados no banco de dados.
    
-####Tratador de Excecoes
+#### Tratador de Excecoes
  Quando uma das 4 camadas da API lança uma Exceção, Esta parte é responsável por tratar a exceção formatando uma 
  resposta mais significativa do erro para o usuário e fazendo com que a aplicação não precise ser reiniciada para 
  voltar a operação. Abaixo há o nome das exceções, sejam elas criadas no projeto ou contextualizadas nele, que são 
@@ -159,7 +159,7 @@ utiliza as funções expostas pela Data access Object)
   
 
 
-#####- O objeto DetalheErro
+##### - O objeto DetalheErro
 Este objeto é definido em domain e serve para o tratador de Exceções construir e retornar uma resposta em 
 formato application/json mais informativa e padronizada.
 
