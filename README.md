@@ -72,7 +72,7 @@ navegador para poder ler a documentação e interagir com a API.
 ### Acesso aos Recursos
 Há um recurso Group e um subrecurso de Group que é User. Um User pertence a um Group e
 um Group pode conter vários Users. Todos os métodos retornam ou/e recebem apenas conteúdos 
-do tipo application/json no corpo da requisição/resposta. Abaixo há uma breve descrição do acesso a cada recurso.
+do tipo `application/json` no corpo da requisição/resposta. Abaixo há uma breve descrição do acesso a cada recurso.
 
 * Group:
   * url base: <http://localhost:8080/api/groups>
@@ -161,7 +161,7 @@ utiliza as funções expostas pela Data access Object)
 
 ##### - A classe DetalheErro
 Esta classe é definida em domain e serve para o tratador de Exceções construir e retornar uma resposta em 
-formato application/json mais informativa e padronizada.
+formato `application/json` mais informativa e padronizada.
 
 
 
