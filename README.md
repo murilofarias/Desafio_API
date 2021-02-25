@@ -2,7 +2,7 @@
 Este desafio foi elaborado com o intuito de comprovar as habilidades do autor em determinadas tecnologias para o exercício
 de função no desenvolvimento de aplicações back-end java.
 
-## Descricao do projeto
+## Descrição do projeto
 * O projeto é uma API rest com um recurso, Group, e um subrecurso, User.
 * A API foi feita na linguagem Java com o springboot utilizando os starters data-JPA e Web.
 * A aplicação executa em um container Docker junto com outro container contendo o banco de dados da aplicação. 
@@ -13,13 +13,13 @@ Tabela de Conteúdos
 <!--ts-->
 * [Tecnologias](#tecnologias)
 * [Como Usar](#como-usar)
-    * [Pre-requisitos](#pre-requisitos)
+    * [Pré-requisitos](#pré-requisitos)
     * [Executando](#executando)
-* [Documentacao Interativa](#documentacao-Interativa)
+* [Documentação Interativa](#documentação-Interativa)
 * [Acesso aos Recursos](#acesso-aos-recursos)
 * [Arquitetura da API](#arquitetura-da-api)
   * [Camadas](#camadas)
-  * [Tratador de Excecoes](#tratador-de-excecoes)
+  * [Tratador de Exceções](#tratador-de-exceções)
 <!--te-->
 
 ---
@@ -38,7 +38,7 @@ As seguintes Tecnologias foram Utilizadas nesse Projeto:
 ---
 ### Como Usar
 
-#### Pre-requisitos
+#### Pré-requisitos
 Antes de começar, precisa-se ter instalado na própria máquina as
 seguintes aplicações:
 * [Docker ( > = 19.03.x)](https://docs.docker.com/get-docker/)
@@ -64,7 +64,7 @@ $ sudo docker-compose up --build --force-recreate
 ```
 
 ---
-### Documentacao Interativa
+### Documentação Interativa
 Com a API executando, acesse a url <http://localhost:8080/api/swagger-ui.html> através de um
 navegador para poder ler a documentação e interagir com a API.
 
@@ -122,7 +122,7 @@ utiliza as funções expostas pela Data access Object)
   Camada responsável por definir os tipos dos atributos das entidades, as restrições, os relacionamentos com outras 
   entidades e a forma como os objetos Java vão ser armazenados e recuperados no banco de dados.
    
-#### Tratador de Excecoes
+#### Tratador de Exceções
  Quando uma das 4 camadas da API lança uma Exceção, Esta parte é responsável por tratar a exceção formatando uma 
  resposta mais significativa do erro para o usuário e fazendo com que a aplicação não precise ser reiniciada para 
  voltar a operação. Abaixo há o nome das exceções, sejam elas criadas no projeto ou contextualizadas nele, que são 
