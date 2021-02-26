@@ -86,7 +86,7 @@ public class Group implements Serializable {
         }
         user.setCreatedAt(new Date());
         user.setGroup(this);
-        this.users.add(user);
+        //this.users.add(user);
     }
 
 

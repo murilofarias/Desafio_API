@@ -61,6 +61,7 @@ public class GroupController {
     @ResponseStatus(HttpStatus.OK)
     public Group putGroup(@ApiParam(value="Id do Group que deve ser atualizado", required = true)
                               @PathVariable("id") String id, @RequestBody Group group) {
+
         service.update(id, group);
         return group;
     }
@@ -85,12 +86,12 @@ public class GroupController {
     public ResponseEntity<Void> postUser(@RequestBody Group group) {
         service.save(group);
 
+
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(group.getId())
                 .toUri();
-
         return ResponseEntity.created(location).build();
     }
 
