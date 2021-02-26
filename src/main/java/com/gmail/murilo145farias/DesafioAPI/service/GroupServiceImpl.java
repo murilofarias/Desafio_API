@@ -2,10 +2,12 @@ package com.gmail.murilo145farias.DesafioAPI.service;
 
 import com.gmail.murilo145farias.DesafioAPI.dao.GroupDao;
 import com.gmail.murilo145farias.DesafioAPI.domain.Group;
+import com.gmail.murilo145farias.DesafioAPI.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -24,11 +26,23 @@ public class GroupServiceImpl implements GroupService {
         group.setCreatedAt(new Date());
         dao.save(group);
 
+
+        group.getUsers()
+                .parallelStream()
+                .forEach(group::addUser);
+        /*
         if(group.getUsers() != null) {
-            group.getUsers()
-                    .parallelStream()
-                    .forEach(group::addUser);
-        }
+            //Sem esse if, o bloco no else funciona para todos os casos menos quando um só user é passado no POST
+            if(group.getUsers().size() == 1){
+                group.addUser(group.getUsers().get(0));
+            }
+            else {
+                //(1)
+                group.getUsers()
+                        .parallelStream()
+                        .forEach(group::addUser);
+            }
+        }*/
     }
 
     @Override
