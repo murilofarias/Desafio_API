@@ -30,19 +30,6 @@ public class GroupServiceImpl implements GroupService {
         group.getUsers()
                 .parallelStream()
                 .forEach(group::addUser);
-        /*
-        if(group.getUsers() != null) {
-            //Sem esse if, o bloco no else funciona para todos os casos menos quando um só user é passado no POST
-            if(group.getUsers().size() == 1){
-                group.addUser(group.getUsers().get(0));
-            }
-            else {
-                //(1)
-                group.getUsers()
-                        .parallelStream()
-                        .forEach(group::addUser);
-            }
-        }*/
     }
 
     @Override
